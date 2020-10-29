@@ -7,6 +7,7 @@ import {
 } from "../dialogs/quick-bar/show-dialog-quick-bar";
 import { HomeAssistant } from "../types";
 import { storeState } from "../util/ha-pref-storage";
+import { isMobileOrTablet } from "../common/util/user-agent";
 
 declare global {
   interface HASSDomEvents {
@@ -47,7 +48,8 @@ export default <T extends Constructor<HassElement>>(superClass: T) =>
       return (
         this.hass?.user?.is_admin &&
         this.hass.enableShortcuts &&
-        this._canOverrideAlphanumericInput(e)
+        this._canOverrideAlphanumericInput(e) &&
+        !isMobileOrTablet()
       );
     }
 
